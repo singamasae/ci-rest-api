@@ -4,6 +4,7 @@ namespace App\Controllers;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\UserModel;
+use App\Models\LogsModel;
 
 class UserController extends BaseController
 {
@@ -16,7 +17,7 @@ class UserController extends BaseController
         header('Access-Control-Allow-Headers: Content-Type, Authorization');
         
         $userModel = new UserModel();        
-        $data['success'] = True;
+        $data['success'] = true;
         $data['data'] = $userModel->findAllUsers();
         return $this->respond($data);
     }
@@ -31,7 +32,7 @@ class UserController extends BaseController
 
         if (!$this->validate($rules)) {
             $response = [
-                'success' => False,                
+                'success' => false,                
                 'message' => $this->validator->getErrors()
             ];
             return $this->respond($response, ResponseInterface::HTTP_BAD_REQUEST);
@@ -45,10 +46,11 @@ class UserController extends BaseController
         ];
 
         $userModel = new UserModel();
-        $userModel->save($data);
+        // $userModel->save($data);              
+        $userModel->saveUserLog($data);
 
         $response = [
-            'success' => True,                
+            'success' => true,                
             'message' => 'User created successfully'
         ];
         return $this->respond($response , ResponseInterface::HTTP_CREATED);        
@@ -59,14 +61,14 @@ class UserController extends BaseController
         $user = $userModel->findUserById($id);
         if (!$user) {
             $response = [
-                'success' => False,                
+                'success' => false,                
                 'message' => 'User not found'
             ];
             return $this->respond($response, ResponseInterface::HTTP_OK);
         }
 
         $response = [
-            'success' => True,                
+            'success' => true,                
             'data' => $user
         ];
         return $this->respond($response , ResponseInterface::HTTP_OK); 
@@ -82,7 +84,7 @@ class UserController extends BaseController
 
         if (!$this->validate($rules)) {
             $response = [
-                'success' => False,                
+                'success' => false,                
                 'message' => $this->validator->getErrors()
             ];
             return $this->respond($response, ResponseInterface::HTTP_BAD_REQUEST);
@@ -92,7 +94,7 @@ class UserController extends BaseController
         $user = $userModel->findUserById($id);
         if (!$user) {
             $response = [
-                'success' => False,                
+                'success' => false,                
                 'message' => 'User not found'
             ];
             return $this->respond($response, ResponseInterface::HTTP_OK);
@@ -109,7 +111,7 @@ class UserController extends BaseController
         $userModel->save($data);
 
         $response = [
-            'success' => True,                
+            'success' => true,                
             'message' => 'User updated successfully'
         ];
         return $this->respond($response , ResponseInterface::HTTP_OK);
@@ -120,7 +122,7 @@ class UserController extends BaseController
         $user = $userModel->findUserById($id);
         if (!$user) {
             $response = [
-                'success' => False,                
+                'success' => false,                
                 'message' => 'User not found'
             ];
             return $this->respond($response, ResponseInterface::HTTP_OK);
@@ -128,7 +130,7 @@ class UserController extends BaseController
 
         $userModel->deleteById($id);
         $response = [
-            'success' => True,                
+            'success' => true,                
             'message' => 'User deleted successfully'
         ];
         return $this->respond($response , ResponseInterface::HTTP_OK);

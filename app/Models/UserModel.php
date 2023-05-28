@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\LogsModel;
 
 class UserModel extends Model
 {
@@ -73,5 +74,26 @@ class UserModel extends Model
 
     public function deleteById(string $id) {
         $this->where('id', $id)->delete();
+    }
+
+    public function saveUserLog($data) {
+        $this->db->transStart();
+        
+        $this->save($data);
+
+        $log = [
+            'key' => 'USER_CREATED',
+            'value' => json_encode($data)
+        ];
+
+        $logModel = new LogsModel();
+        $logModel->save($log);
+
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            return false;
+        }
+        return true;
     }
 }
