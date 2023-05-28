@@ -12,10 +12,6 @@ class UserController extends BaseController
 
     public function index()
     {
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
-        header('Access-Control-Allow-Headers: Content-Type, Authorization');
-        
         $userModel = new UserModel();        
         $data['success'] = true;
         $data['data'] = $userModel->findAllUsers();
