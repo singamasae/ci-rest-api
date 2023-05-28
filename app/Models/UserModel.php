@@ -14,7 +14,7 @@ class UserModel extends Model
     // protected $returnType   = \App\Entities\UserEntity::class;
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username', 'password'];
+    protected $allowedFields    = ['username', 'password', 'name', 'address'];
 
     // Dates
     protected $useTimestamps = true;
