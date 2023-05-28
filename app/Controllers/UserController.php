@@ -46,8 +46,7 @@ class UserController extends BaseController
         ];
 
         $userModel = new UserModel();
-        // $userModel->save($data);              
-        $userModel->saveUserLog($data);
+        $userModel->save($data);        
 
         $response = [
             'success' => true,                
