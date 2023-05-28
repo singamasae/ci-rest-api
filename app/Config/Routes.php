@@ -50,4 +50,8 @@ if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 
 $routes->group('api', function ($routes) {    
     $routes->get('users', 'UserController::index');
+    $routes->get('user/(:num)', 'UserController::get/$1');
+    $routes->post('user', 'UserController::post');     
+    $routes->put('user/(:num)', 'UserController::put/$1');
+    $routes->delete('user/(:num)', 'UserController::delete/$1');
 });
