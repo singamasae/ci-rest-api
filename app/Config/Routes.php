@@ -55,3 +55,7 @@ $routes->group('api', function ($routes) {
     $routes->put('user/(:num)', 'UserController::put/$1');
     $routes->delete('user/(:num)', 'UserController::delete/$1');
 });
+
+$routes->group('auth', function ($routes) {
+    $routes->post('token', 'AuthController::auth'); 
+});

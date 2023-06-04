@@ -4,6 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 use App\Models\LogsModel;
+use Exception;
 
 class UserModel extends Model
 {
@@ -65,6 +66,17 @@ class UserModel extends Model
         $user = $this->asArray()                
                     ->where(['id' => $id])
                     ->first();
+        return $user;
+    }
+
+    public function findUserByUserName(string $userName) {
+        $user = $this->asArray()                
+                    ->where(['username' => $userName])
+                    ->first();
+        
+        if (!$user) 
+            throw new Exception('User does not exist');
+
         return $user;
     }
 
